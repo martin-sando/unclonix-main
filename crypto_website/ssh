@@ -1,0 +1,31 @@
+certbot --force-renewal
+
+
+
+
+[Unit]
+Description=Gunicorn instance to serve unclonix
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/root/unclonix/unclonix_website
+ExecStart=/usr/local/bin/gunicorn --timeout 5000 --workers 3 --bind 0.0.0.0:2103 -m 007 main:app
+
+[Install]
+WantedBy=multi-user.target
+
+
+server {
+    server_name unclonix.com www.unclonix.com;
+    client_max_body_size 16m;
+
+    location / {
+        include proxy_params;
+        proxy_read_timeout 600s;
+        proxy_connect_timeout 600s;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://0.0.0.0:2103;
+    }
+}

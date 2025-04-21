@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="x-apple-disable-message-reformatting"/>
+
+    <title>Unclonix Crypto</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600"/>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">-->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!--<![endif]-->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /*overflow: hidden;*/
+        }
+
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            overflow: hidden;
+            background: #010101;
+            height: 100%;
+        }
+
+        .dark-theme-container {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            /*align-items: stretch;*/
+            /*justify-content: center;*/
+            width: 100%;
+            height: 100%;
+            background: #010101;
+        }
+
+        .flexbox-container-with-header-and-content {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 10px;
+            z-index: 100;
+        }
+
+        .center-column-cta {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 109px;
+            height: 38px;
+        }
+
+        .center-column-cta:hover {
+            opacity: 0.8;
+        }
+
+        .image-container1 {
+            display: block;
+            flex: 0 0 auto;
+            max-width: initial;
+            height: 38px;
+        }
+
+        .flex-row-with-icon {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        #connectButton {
+            cursor: pointer;
+        }
+
+        .svg-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            width: 31px;
+            height: 28px;
+            overflow: hidden;
+            color: #bdff17;
+        }
+
+        .connect-heading-style {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 500 18px/21.5px Prompt, sans-serif;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .asset-card-container {
+            flex: 0 0 auto;
+            /*padding-right: 4.25px;*/
+            margin-top: -144px;
+        }
+
+        .asset-check-container {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 1388px;
+            margin: auto;
+            border: none;
+        }
+
+        .container-background-outer {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+        }
+
+        .container-background {
+            position: inherit;
+            top: 80px;
+            bottom: -270px;
+            margin: auto;
+            aspect-ratio: 1 / 1;
+            background: url("{{ url_for('static', filename='img/background_logo.png') }}?ver={{ ver }}") 50% / cover no-repeat;
+            opacity: 0.1;
+        }
+
+        .asset-card-container1 {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 100%;
+            padding-top: 160px;
+            padding-bottom: 250px;
+            z-index: 99;
+        }
+
+        .asset-image-container {
+            display: block;
+            flex: 0 0 auto;
+            max-width: initial;
+            height: 232px;
+            opacity: 0;
+        }
+
+        .asset-details-container {
+            flex: 0 0 auto;
+            padding-right: 14px;
+            padding-left: 14px;
+            /*margin-top: -145px;*/
+        }
+
+        .asset-checker-container {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+            /*width: 730px;*/
+        }
+
+        .heading-large-bold-white {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 600 30px/72px Prompt, sans-serif;
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .collectible-card-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 292px;
+            height: 500px;
+            padding: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            backdrop-filter: blur(26px);
+        }
+
+        .upload-card-container {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+
+            width: 100%;
+            height: 200px;
+            padding: 24px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(26px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .object-protection-section {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 326px;
+            padding-top: 69px;
+            padding-bottom: 69px;
+        }
+
+        .object-protection-upload-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .object-protection-image {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            width: 44px;
+            max-width: initial;
+            height: 44px;
+            overflow: hidden;
+        }
+
+        .object-protection-text-styles {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/21px Prompt, sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        .collectible-card-container1 {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+            justify-content: flex-start;
+            /*height: 200px;*/
+        }
+
+        .collectible-card {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            width: 260px;
+            height: 260px;
+            padding: 14px;
+            overflow: hidden;
+            background: black;
+            border-radius: 16px;
+        }
+
+        .image-container {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            max-width: initial;
+            height: 172px;
+            border: none;
+            object-fit: cover;
+        }
+
+        .collectible-card-view {
+            box-sizing: border-box;
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            align-items: flex-start;
+            align-self: stretch;
+            justify-content: space-between;
+        }
+
+        .collectible-card-container2 {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+            align-self: stretch;
+            justify-content: flex-start;
+        }
+
+        .collectible-info-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            align-self: stretch;
+            justify-content: center;
+        }
+
+        .collectible-info-style {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 600 24px/29px Prompt, sans-serif;
+            color: white;
+            text-align: left;
+        }
+
+        .faded-text {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 400 14px/17px Prompt, sans-serif;
+            color: white;
+            text-align: left;
+            opacity: 0.3;
+        }
+
+        .separator-line {
+            box-sizing: border-box;
+            flex: 0 0 auto;
+            align-self: stretch;
+            height: 1px;
+            border-top: 1px solid white;
+        }
+
+        .owner-details-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            align-self: stretch;
+            justify-content: space-between;
+        }
+
+        .owner-details-container-vertical {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .owner-title {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 600 14px/19px Prompt, sans-serif;
+            color: white;
+        }
+
+        .white-text-on-dark-bg {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 300 14px/19px Prompt, sans-serif;
+            color: white;
+        }
+
+        .svg-container1 {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            width: 16px;
+            height: 18px;
+            overflow: hidden;
+        }
+
+        .prompt-message {
+            box-sizing: border-box;
+            flex: 0 0 auto;
+            width: 100%;
+            margin: 0;
+            padding: 12px 0 0;
+            font: 400 11px/25px Prompt, sans-serif;
+            color: white;
+            text-align: left;
+        }
+
+        .prompt-message-transfer {
+            width: 220px;
+            padding-bottom: 14px;
+        }
+
+        .flex-row-with-buttons {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .back-button-style {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            width: 79px;
+            min-width: 79px;
+            height: 39px;
+            font: 600 16px/19px Prompt, sans-serif;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 1);
+            border-radius: 8px;
+        }
+
+        .primary-button {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            width: 106px;
+            min-width: 106px;
+            height: 39px;
+            font: 600 16px / 39px Prompt, sans-serif;
+            color: black;
+            cursor: pointer;
+            background: #bdff17;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .primary-button-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .header-section {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 99;
+            background-color: #0c0c0c;
+            position: fixed;
+            /* Учитываем нижние отступы мобильных устройств */
+            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+        }
+
+        .faded-text1 {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/19px Prompt, sans-serif;
+            color: white;
+            /*opacity: 0.4;*/
+            width: 33.3%;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .faded-text1:hover {
+            color: #bdff17;
+        }
+
+        .contact-info-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 342px;
+        }
+
+        .flex-row-with-space-between {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 105px;
+        }
+
+        .unique-text-block {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/19px Prompt, sans-serif;
+            color: #bdff17;
+        }
+
+        .unique-text-block:hover {
+            color: white;
+        }
+
+        #input_address {
+            width: 100%;
+            height: 100%;
+            color: white;
+            text-align: center;
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        /**/
+        .gallery {
+            position: relative;
+        }
+
+        .thumbnail {
+            width: 232px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Заставочный экран */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeOut 1s ease-in-out 1s forwards;
+        }
+
+        /* Заставочный экран */
+        #splash-screen-2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 900;
+            animation: fadeOut 1s ease-in-out 2s forwards;
+        }
+
+        #splash-screen img {
+            width: 50%;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- Заставочный экран -->
+<div id="splash-screen">
+    <img src="{{ url_for('static', filename='img/black_logo.svg') }}?ver={{ ver }}" alt="Logo">
+    <p style="font-weight: 600; font-size: 2rem; width: 60%; text-align: center; color: #fff;">
+        Welcome to <span style="color:#BDFF17;">Unclonix</span>
+    </p>
+</div>
+
+<!-- Заставочный экран белый-->
+<div id="splash-screen-2"></div>
+
+<div class="container-background-outer">
+    <div class="container-background"></div>
+</div>
+<!--<div class="fullscreen">-->
+<!--    <img src="{{ url_for('static', filename='img/metka_example.png') }}?ver={{ ver }}" alt="Увеличенная метка" id="metka_img_big">-->
+<!--</div>-->
+
+<div class="dark-theme-container">
+    <div class="flexbox-container-with-header-and-content">
+        <a class="center-column-cta" href="https://unclonix.com/crypto">
+            <img src="{{ url_for('static', filename='img/crypto_logo.png') }}?ver={{ ver }}" class="image-container1"/>
+        </a>
+    </div>
+    <div class="asset-card-container">
+        <div class="asset-check-container">
+            <div class="asset-card-container1">
+                <div class="asset-details-container">
+                    <div class="asset-checker-container" id="main_container" style="display: none">
+                        <div class="collectible-card-container">
+                            <div class="collectible-card-container1">
+                                <div class="collectible-card">
+                                    <div class="gallery">
+                                        <img src="{{ url_for('static', filename='img/metka_example.png') }}?ver={{ ver }}" alt="Метка" class="thumbnail"
+                                             id="metka_img_small">
+                                    </div>
+                                </div>
+                                <div class="collectible-card-view">
+                                    <div class="collectible-card-container2">
+                                        <div class="collectible-info-container">
+                                            <p class="collectible-info-style">Collectible No <span id="collectible_num">239</span></p>
+                                            <p class="faded-text">Certified by Unclonix</p>
+                                        </div>
+                                        <div class="separator-line"></div>
+                                        <div class="owner-details-container">
+                                            <p class="owner-title">Owner</p>
+                                            <div class="flex-row-with-icon">
+                                                <p class="white-text-on-dark-bg" id="ownerDisplay">Loading...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="main_container_details" class="owner-details-container owner-details-container-vertical">
+                                        <p class="prompt-message" id="prompt_message">Connect to unlock more functionalities</p>
+                                        <div class="flex-row-with-buttons">
+                                            <button class="back-button-style" onclick="set_block('upload')" style="width: 100%">Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload -->
+                    <div class="asset-checker-container" id="upload_block">
+                        <p class="heading-large-bold-white">Check your assets</p>
+
+                        <!-- Upload -->
+                        <div class="upload-card-container">
+                            <label style="width: 100%; height: 100%; cursor: pointer; position: absolute">
+                                <input type="file" style="width: 100%; height: 100%; opacity: 0" id="input_file" accept="image/*" onchange="make_request()">
+                            </label>
+                            <div class="object-protection-container">
+                                <div class="object-protection-upload-container">
+                                    <img src="{{ url_for('static', filename='img/upload.png') }}?ver={{ ver }}" class="object-protection-image"/>
+                                    <p class="object-protection-text-styles">Upload the picture of the UPS<br/>that protects your object</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p style="color: #676868; padding-top: 30px; text-align: center">Open from desktop to unlock more features</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-section">
+        <a class="faded-text1" href="https://www.linkedin.com/company/unclonix/">
+            <img src="{{ url_for('static', filename='img/linked.svg') }}?ver={{ ver }}" style="width: 24px; height: 24px" alt="LinkedIn"/>
+        </a>
+        <a class="faded-text1" href="https://unclonix.com/crypto">FAQ</a>
+        <a class="faded-text1" href="https://x.com/unclonix">
+            <img src="{{ url_for('static', filename='img/x.svg') }}?ver={{ ver }}" style="width: 24px; height: 24px" alt="X"/>
+        </a>
+    </div>
+</div>
+
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', () => {-->
+<!--        const thumbnail = document.querySelector('.thumbnail');-->
+<!--        const fullscreen = document.querySelector('.fullscreen');-->
+
+<!--        // При клике на миниатюру показываем увеличенное изображение-->
+<!--        thumbnail.addEventListener('click', () => {-->
+<!--            fullscreen.classList.add('active');-->
+<!--            fullscreen.classList.add('animate__animated', 'animate__fadeIn');-->
+<!--        });-->
+
+<!--        // При клике на увеличенное изображение или фон закрываем его-->
+<!--        fullscreen.addEventListener('click', () => {-->
+<!--            fullscreen.classList.remove('active');-->
+<!--            fullscreen.classList.remove('animate__animated', 'animate__fadeIn');-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<script>
+    const prompt_message = document.getElementById('prompt_message');
+
+    let current_metka_hash = "";
+
+    const main_container = document.getElementById('main_container');
+
+    const upload_block = document.getElementById('upload_block');
+    const collectible_num = document.getElementById('collectible_num');
+    const ownerDisplay = document.getElementById('ownerDisplay');
+
+    // const metka_img_big = document.getElementById('metka_img_big');
+    const metka_img_small = document.getElementById('metka_img_small');
+
+    function set_block(block_name) {
+        if (block_name === "upload") {
+            upload_block.style.display = 'flex';
+            main_container.style.display = 'none';
+            ownerDisplay.textContent = "Loading...";
+            current_metka_hash = "";
+        } else {
+            upload_block.style.display = 'none';
+            main_container.style.display = 'flex';
+        }
+
+        if (block_name === "connect_to_unlock") {
+            prompt_message.textContent = "Open from desktop to unlock more features";
+            ownerDisplay.textContent = "Connect to unlock";
+        } else if (block_name === "report_operation") {
+            prompt_message.textContent = "Something went wrong. Try again later";
+        } else if (block_name === "loading") {
+            prompt_message.textContent = "Loading...";
+        }
+    }
+
+    function hexToHashAdvanced(hexString) {
+        const cleanHex = hexString.startsWith('0x') ? hexString.slice(2) : hexString;
+        let num = parseInt(cleanHex, 16);
+
+        // Более сложное перемешивание (взято из murmurhash-like подхода)
+        num = num >>> 0;
+        num = Math.imul(num, 0xcc9e2d51);
+        num = (num << 15) | (num >>> 17);
+        num = Math.imul(num, 0x1b873593);
+
+        return Math.abs(num % 1001);
+    }
+
+    // Загружаем фотку на сервер и получаем хэш
+    function make_request() {
+        let data = new FormData();
+        data.append('img', document.querySelector('#input_file').files[0]);
+
+        let request = new XMLHttpRequest();
+        request.responseType = 'json';
+        request.open('post', '/api/get_hash');
+
+        request.addEventListener('load', function (e) {
+            console.log(request.response);
+            document.getElementById('input_file').value = '';
+
+            console.log(request.response.status);
+            console.log(request.response.hash);
+            console.log(request.response.filename);
+
+            if (request.response.status) {
+                // Меняем блок на нужный
+                set_block("loading");
+
+                console.log("/mediafiles/" + request.response.filename + ".svg");
+                // metka_img_big.src = "/mediafiles/" + request.response.filename + ".svg";
+                metka_img_small.src = "/mediafiles/" + request.response.filename + ".svg";
+
+                collectible_num.textContent = hexToHashAdvanced(request.response.hash);
+                current_metka_hash = "0x" + request.response.hash;
+
+                set_block("connect_to_unlock");
+            } else {
+                set_block("report_operation");
+            }
+        });
+
+        request.send(data);
+    }
+</script>
+</body>
+</html>

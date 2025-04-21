@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unclonix Crypto</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600"/>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!--<![endif]-->
+
+    <meta name="x-apple-disable-message-reformatting"/>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            overflow: hidden;
+            background: #f0f0f0;
+            height: 100%;
+        }
+
+        .dark-theme-container {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: #010101;
+        }
+
+        .flexbox-container-with-header-and-content {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px calc(23% - 125px);
+            z-index: 100;
+        }
+
+        .center-column-cta {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 179px;
+            height: 64px;
+        }
+
+        .center-column-cta:hover {
+            opacity: 0.8;
+        }
+
+        .image-container1 {
+            display: block;
+            flex: 0 0 auto;
+            max-width: initial;
+            height: 63px;
+        }
+
+        .flex-row-with-icon {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        #connectButton {
+            cursor: pointer;
+        }
+
+        .svg-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            width: 31px;
+            height: 28px;
+            overflow: hidden;
+            color: #bdff17;
+        }
+
+        .connect-heading-style {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 500 18px/21.5px Prompt, sans-serif;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .asset-card-container {
+            flex: 0 0 auto;
+            padding-right: 4.25px;
+            margin-top: -144px;
+            max-height: 100%;
+        }
+
+        .asset-check-container {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 1388px;
+            margin: auto;
+            border: none;
+        }
+
+        .container-background-outer {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+        }
+
+        .container-background {
+            position: inherit;
+            top: 80px;
+            bottom: -270px;
+            margin: auto;
+            aspect-ratio: 1 / 1;
+            background: url("{{ url_for('static', filename='img/background_logo.png') }}?ver={{ ver }}") 50% / cover no-repeat;
+            opacity: 0.1;
+        }
+
+        .asset-card-container1 {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 766px;
+            padding-top: 163px;
+            padding-bottom: 250px;
+            z-index: 99;
+        }
+
+        .asset-image-container {
+            display: block;
+            flex: 0 0 auto;
+            max-width: initial;
+            height: 232px;
+            opacity: 0;
+        }
+
+        .asset-details-container {
+            flex: 0 0 auto;
+            padding-right: 22px;
+            padding-left: 14px;
+            margin-top: -145px;
+        }
+
+        .asset-checker-container {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            align-items: center;
+            justify-content: center;
+            width: 730px;
+        }
+
+        .heading-large-bold-white {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 600 60px/72px Prompt, sans-serif;
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .collectible-card-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 690px;
+            height: 248px;
+            padding: 24px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            backdrop-filter: blur(26px);
+        }
+
+        .upload-card-container {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+
+            width: 690px;
+            height: 248px;
+            padding: 24px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(26px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .object-protection-section {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            width: 326px;
+            padding-top: 69px;
+            padding-bottom: 69px;
+        }
+
+        .object-protection-upload-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .object-protection-image {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            width: 44px;
+            max-width: initial;
+            height: 44px;
+            overflow: hidden;
+        }
+
+        .object-protection-text-styles {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/21px Prompt, sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        .collectible-card-container1 {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            gap: 24px;
+            align-items: center;
+            justify-content: flex-start;
+            height: 200px;
+        }
+
+        .collectible-card {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            width: 200px;
+            height: 200px;
+            padding: 14px;
+            overflow: hidden;
+            background: black;
+            border-radius: 16px;
+        }
+
+        .image-container {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            max-width: initial;
+            height: 172px;
+            border: none;
+            object-fit: cover;
+        }
+
+        .collectible-card-view {
+            box-sizing: border-box;
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            align-items: flex-start;
+            align-self: stretch;
+            justify-content: space-between;
+        }
+
+        .collectible-card-container2 {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+            align-self: stretch;
+            justify-content: flex-start;
+        }
+
+        .collectible-info-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            align-self: stretch;
+            justify-content: center;
+        }
+
+        .collectible-info-style {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 600 24px/29px Prompt, sans-serif;
+            color: white;
+            text-align: left;
+        }
+
+        .faded-text {
+            flex: 0 0 auto;
+            align-self: stretch;
+            padding: 0;
+            margin: 0;
+            font: 400 14px/17px Prompt, sans-serif;
+            color: white;
+            text-align: left;
+            opacity: 0.3;
+        }
+
+        .separator-line {
+            box-sizing: border-box;
+            flex: 0 0 auto;
+            align-self: stretch;
+            height: 1px;
+            border-top: 1px solid white;
+        }
+
+        .owner-details-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            align-self: stretch;
+            justify-content: space-between;
+        }
+
+        .owner-details-container-vertical {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .owner-title {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 600 16px/19px Prompt, sans-serif;
+            color: white;
+        }
+
+        .white-text-on-dark-bg {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 300 16px/19px Prompt, sans-serif;
+            color: white;
+        }
+
+        .svg-container1 {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            width: 16px;
+            height: 18px;
+            overflow: hidden;
+        }
+
+        .prompt-message {
+            box-sizing: border-box;
+            flex: 0 0 auto;
+            width: 184px;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/21px Prompt, sans-serif;
+            color: white;
+            text-align: left;
+        }
+
+        .prompt-message-transfer {
+            width: 220px;
+            padding-bottom: 14px;
+        }
+
+        .flex-row-with-buttons {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .back-button-style {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            width: 79px;
+            min-width: 79px;
+            height: 39px;
+            font: 600 16px/19px Prompt, sans-serif;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .primary-button {
+            box-sizing: border-box;
+            display: block;
+            flex: 0 0 auto;
+            width: 106px;
+            min-width: 106px;
+            height: 39px;
+            font: 600 16px / 39px Prompt, sans-serif;
+            color: black;
+            cursor: pointer;
+            background: #bdff17;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .primary-button-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .header-section {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px calc(23% - 125px);
+            margin-top: -99px;
+            z-index: 99;
+        }
+
+        .faded-text1 {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/19px Prompt, sans-serif;
+            color: white;
+            opacity: 0.4;
+        }
+
+        .faded-text1:hover {
+            color: #bdff17;
+        }
+
+        .contact-info-container {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 342px;
+        }
+
+        .flex-row-with-space-between {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 105px;
+        }
+
+        .unique-text-block {
+            flex: 0 0 auto;
+            padding: 0;
+            margin: 0;
+            font: 400 16px/19px Prompt, sans-serif;
+            color: #bdff17;
+        }
+
+        .unique-text-block:hover {
+            color: white;
+        }
+
+        #input_address {
+            width: 100%;
+            height: 100%;
+            color: white;
+            text-align: center;
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        /**/
+        .gallery {
+            position: relative;
+        }
+
+        .thumbnail {
+            width: 172px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div class="container-background-outer">
+    <div class="container-background"></div>
+</div>
+<div class="fullscreen">
+    <img src="{{ url_for('static', filename='img/metka_example.png') }}?ver={{ ver }}" alt="Увеличенная метка" id="metka_img_big">
+</div>
+
+<div class="dark-theme-container">
+    <div class="flexbox-container-with-header-and-content">
+        <a class="center-column-cta" href="https://unclonix.com/crypto">
+            <img src="{{ url_for('static', filename='img/crypto_logo.png') }}?ver={{ ver }}" class="image-container1"/>
+        </a>
+        <div class="flex-row-with-icon" id="connectButton">
+            <div class="svg-container">
+                <svg viewBox="0 0 31 28" x="0" y="0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <clipPath id="clip2_138_868" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="31" height="28" fill="white" transform="translate(0, 0)"/>
+                        </clipPath>
+                    </defs>
+                    <g id="Frame 25" clip-path="url(#clip2_138_868)" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Group">
+                            <path id="Vector"
+                                  d="M19.23,0h-7.87c-0.13,0.0029 -0.25,0.0559 -0.34,0.1476c-0.09,0.0917 -0.14,0.2148 -0.14,0.3429c-0.16,7.6412 -4.03,14.8928 -10.68,20.0298c-0.11,0.0798 -0.17,0.1958 -0.19,0.3241c-0.02,0.1283 0.01,0.2591 0.08,0.3657l4.61,6.5829c0.15,0.2242 0.46,0.2747 0.67,0.1103c4.16,-3.1914 7.51,-7.0404 9.92,-11.3074c2.42,4.267 5.76,8.116 9.92,11.3064c0.22,0.1654 0.53,0.1149 0.68,-0.1102l4.61,-6.581c0.07,-0.1066 0.1,-0.2372 0.08,-0.3653c-0.02,-0.1281 -0.08,-0.2439 -0.19,-0.3237c-6.65,-5.1397 -10.52,-12.3913 -10.68,-20.0325c0,-0.1281 -0.05,-0.2511 -0.14,-0.3427c-0.09,-0.0915 -0.21,-0.1443 -0.34,-0.1469z"
+                                  fill="currentColor"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <p class="connect-heading-style" id="connectButtonText">CONNECT</p>
+        </div>
+    </div>
+    <div class="asset-card-container">
+        <div class="asset-check-container">
+            <div class="asset-card-container1">
+                <img src="{{ url_for('static', filename='img/zaglushka.png') }}?ver={{ ver }}" class="asset-image-container"/>
+                <div class="asset-details-container">
+                    <div class="asset-checker-container">
+                        <p class="heading-large-bold-white">Check your assets</p>
+
+                        <div class="collectible-card-container" style="display: none" id="main_container">
+                            <div class="collectible-card-container1">
+                                <div class="collectible-card">
+                                    <div class="gallery">
+                                        <img src="{{ url_for('static', filename='img/metka_example.png') }}?ver={{ ver }}" alt="Метка" class="thumbnail"
+                                             id="metka_img_small">
+                                    </div>
+                                </div>
+                                <div class="collectible-card-view">
+                                    <div class="collectible-card-container2">
+                                        <div class="collectible-info-container">
+                                            <p class="collectible-info-style">Collectible No <span id="collectible_num">239</span></p>
+                                            <p class="faded-text">Certified by Unclonix</p>
+                                        </div>
+                                        <div class="separator-line"></div>
+                                        <div class="owner-details-container">
+                                            <p class="owner-title">Owner</p>
+                                            <div class="flex-row-with-icon">
+                                                <p class="white-text-on-dark-bg" id="ownerDisplay">Loading...</p>
+                                                <div class="svg-container1" style="cursor: pointer" onclick="CopyOwner()">
+                                                    <svg viewBox="0 0 16 18" x="0" y="0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <g id="326595_content_copy_duplicate_icon 1" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect id="Rectangle 36958" x="4.7000000000000455" y="4.7000000000000455" width="9.6"
+                                                                  height="11.6" rx="1.3" stroke="white" stroke-opacity="0.2" stroke-width="1.4"/>
+                                                            <path id="Vector 1" d="M2,11v-7c0,-1.105 0.9,-2 2,-2h6" stroke="white" stroke-opacity="0.2"
+                                                                  stroke-width="1.4" stroke-linecap="round"/>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="main_container_details" class="owner-details-container">
+                                        <p class="prompt-message" id="prompt_message">Connect to unlock more functionalities</p>
+                                        <div class="flex-row-with-buttons">
+                                            <button class="back-button-style" onclick="set_block('upload')">Back</button>
+                                            <label style="height: 39px; width: 209px" id="input_address_label">
+                                                <input type="text" id="input_address" placeholder="Insert Address">
+                                            </label>
+                                            <a class="primary-button" id="main_button">Connect</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upload -->
+                        <div class="upload-card-container" id="upload_block">
+                            <label style="width: 100%; height: 100%; cursor: pointer; position: absolute">
+                                <input type="file" style="width: 100%; height: 100%; opacity: 0" id="input_file" accept="image/*" onchange="make_request()">
+                            </label>
+                            <div class="object-protection-container">
+                                <div class="object-protection-upload-container">
+                                    <img src="{{ url_for('static', filename='img/upload.png') }}?ver={{ ver }}" class="object-protection-image"/>
+                                    <p class="object-protection-text-styles">Upload the picture of the UPS<br/>that protects your object</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-section">
+        <a class="faded-text1" href="https://unclonix.com/crypto">What&apos;s an UPS? FAQ</a>
+        <div class="contact-info-container">
+            <a class="faded-text1" href="mailto:unclonix@gmail.com">unclonix@gmail.com</a>
+            <div class="flex-row-with-space-between">
+                <a class="unique-text-block" href="https://www.linkedin.com/company/unclonix/">LinkedIn</a>
+                <a class="unique-text-block" href="https://x.com/unclonix">X</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/starknet@6.24.1/dist/index.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const thumbnail = document.querySelector('.thumbnail');
+        const fullscreen = document.querySelector('.fullscreen');
+
+        // При клике на миниатюру показываем увеличенное изображение
+        thumbnail.addEventListener('click', () => {
+            fullscreen.classList.add('active');
+            fullscreen.classList.add('animate__animated', 'animate__fadeIn');
+        });
+
+        // При клике на увеличенное изображение или фон закрываем его
+        fullscreen.addEventListener('click', () => {
+            fullscreen.classList.remove('active');
+            fullscreen.classList.remove('animate__animated', 'animate__fadeIn');
+        });
+    });
+</script>
+
+<script>
+    let myWalletAddress;
+    let ownerWalletAddress = "";
+    let main_button = document.getElementById('main_button');
+    const prompt_message = document.getElementById('prompt_message');
+
+    const connectButton = document.getElementById('connectButton');
+    const connectButtonText = document.getElementById('connectButtonText');
+
+    let connectWallet_global, getNftOwner_global, transferOwnership_global, setNftOwner_global;
+    let current_metka_hash = "";
+
+    const main_container = document.getElementById('main_container');
+    const main_container_details = document.getElementById('main_container_details');
+    const input_address_label = document.getElementById('input_address_label');
+    const upload_block = document.getElementById('upload_block');
+    const collectible_num = document.getElementById('collectible_num');
+    const ownerDisplay = document.getElementById('ownerDisplay');
+
+    const metka_img_big = document.getElementById('metka_img_big');
+    const metka_img_small = document.getElementById('metka_img_small');
+
+    // Адрес смарт-контракта
+    const contractAddress = '0x0227aa275b31d80bd1a3ca290d2d83eeca18c1dec3032fc416544d1a271d5584';
+
+    function short_wallet_address(address, delta = 4) {
+        console.log(address);
+        address = address.startsWith('0x') ? address.slice(2) : address;
+        return `${address.slice(0, delta)}...${address.slice(-delta)}`;
+    }
+
+    function transferInterfaceStart() {
+        set_block("input_transfer_the_ownership_to");
+    }
+
+    function set_block(block_name, optional_info = "") {
+        // Remove all listeners from main_button
+        main_button.replaceWith(main_button.cloneNode(true));
+        main_button = document.getElementById('main_button');
+        main_button.classList.remove("primary-button-disabled");
+        main_button.removeAttribute("target");
+        main_button.removeAttribute("href");
+
+        main_container_details.classList.remove("owner-details-container-vertical");
+        prompt_message.classList.remove("prompt-message-transfer");
+        input_address_label.style.display = "none";
+
+        if (block_name === "upload") {
+            upload_block.style.display = 'flex';
+            main_container.style.display = 'none';
+            ownerDisplay.textContent = "Loading...";
+            current_metka_hash = "";
+        } else {
+            upload_block.style.display = 'none';
+            main_container.style.display = 'flex';
+        }
+
+        if (block_name === "connect_to_unlock") {
+            prompt_message.textContent = "Connect to unlock more functionalities";
+            main_button.textContent = "Connect";
+            ownerDisplay.textContent = "Connect to unlock";
+            main_button.addEventListener('click', connectWallet_global);
+        } else if (block_name === "belongs_to_another_user") {
+            prompt_message.textContent = "Connect to unlock more functionalities";
+            main_button.textContent = "Buy (In dev.)";
+        } else if (block_name === "transfer_the_ownership") {
+            prompt_message.textContent = "Transfer the ownership?";
+            main_button.textContent = "Transfer";
+            main_button.addEventListener('click', transferInterfaceStart);
+        } else if (block_name === "claim_the_ownership") {
+            prompt_message.textContent = "Claim the ownership?";
+            main_button.textContent = "Claim";
+            main_button.addEventListener('click', setNftOwner_global);
+        } else if (block_name === "input_transfer_the_ownership_to") {
+            prompt_message.textContent = "Transfer the ownership to:";
+            prompt_message.classList.add("prompt-message-transfer");
+            main_container_details.classList.add("owner-details-container-vertical");
+            input_address_label.style.display = "block";
+            main_button.textContent = "Transfer";
+            main_button.addEventListener('click', transferOwnership_global);
+        } else if (block_name === "successful_transfer") {
+            prompt_message.textContent = "Success! Transfer is launched";
+            main_button.textContent = "Transaction";
+            main_button.href = "https://voyager.online/tx/" + optional_info;
+            main_button.setAttribute("target", "_blank");
+            ownerDisplay.textContent = short_wallet_address(ownerWalletAddress, 8);
+        } else if (block_name === "successful_claim") {
+            prompt_message.textContent = "Success! The ownership is claimed";
+            main_button.textContent = "Transaction";
+            main_button.href = "https://voyager.online/tx/" + optional_info;
+            main_button.setAttribute("target", "_blank");
+            ownerDisplay.textContent = short_wallet_address(ownerWalletAddress, 8) + " (You)";
+        } else if (block_name === "report_operation") {
+            prompt_message.textContent = "Something went wrong. Try again later";
+            main_button.textContent = "Report";
+        } else if (block_name === "loading") {
+            prompt_message.textContent = "Loading...";
+            main_button.textContent = "Wait";
+            main_button.classList.add("primary-button-disabled");
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Функция подключения кошелька
+        async function connectWallet() {
+            try {
+                // Проверяем наличие кошелька (например, Argent X)
+                if (!window.starknet) {
+                    throw new Error('Кошелёк StarkNet не установлен. Установите Argent X или другой совместимый кошелёк.');
+                }
+
+                // Активируем кошелёк и получаем адрес
+                let [walletAddress] = await window.starknet.enable();
+
+                if (!walletAddress) {
+                    throw new Error('Не удалось подключить кошелёк');
+                }
+                if (walletAddress.length > 5) {
+                    walletAddress = '0x' + walletAddress.slice(2).padStart(64, "0");
+                }
+                myWalletAddress = walletAddress;
+
+                // Обновляем текст кнопки
+                connectButtonText.textContent = short_wallet_address(walletAddress);
+
+                // Сохраняем объект кошелька для дальнейшего использования
+                window.walletAccount = window.starknet;
+                console.log('Кошелёк подключён:', walletAddress);
+
+                if (current_metka_hash !== "") {
+                    getNftOwner_global(current_metka_hash);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error.message);
+                connectButtonText.textContent = 'Error';
+            }
+        }
+
+        // Функция чтения владельца NFT (get_nft_owner с параметром hash)
+        async function getNftOwner(hash, second_try = false) {
+            set_block("loading");
+            try {
+                if (!hash) {
+                    throw new Error('Введите hash (token_id)');
+                }
+
+                const provider = window.starknet.provider;
+
+                // Низкоуровневый вызов функции get_nft_owner
+                const response = await provider.callContract({
+                    contractAddress: contractAddress,
+                    entrypoint: 'get_nft_owner',
+                    calldata: [hash]
+                });
+
+                // Предполагаем, что результат — это адрес владельца (felt252)
+                console.log(response);
+                console.log(response.result);
+                let owner = response.result[0];
+
+                if (owner.length > 5) {
+                    owner = '0x' + owner.slice(2).padStart(64, "0");
+                }
+
+                console.log('Владелец NFT:', owner);
+                ownerWalletAddress = owner;
+
+                if (owner === "0x0") {
+                    ownerDisplay.textContent = "None";
+                    set_block("claim_the_ownership");
+                } else {
+                    console.log(owner, myWalletAddress);
+                    console.log(owner === myWalletAddress);
+                    if (owner === myWalletAddress) {
+                        ownerDisplay.textContent = short_wallet_address(owner, 8) + " (You)";
+                        set_block("transfer_the_ownership");
+                    } else {
+                        ownerDisplay.textContent = short_wallet_address(owner, 8);
+                        set_block("belongs_to_another_user");
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка чтения владельца NFT:', error);
+
+                if (!second_try) {
+                    console.log("Trying again...");
+                    await getNftOwner(hash, true);
+                } else {
+                    set_block("report_operation");
+                }
+            }
+        }
+
+        // Функция установки нового владельца NFT (set_nft_owner_by_address как transfer_ownership)
+        async function setNftOwner() {
+            set_block("loading");
+            try {
+                if (!window.starknet || !window.starknet.account) {
+                    throw new Error('Сначала подключите кошелёк');
+                }
+
+                if (!current_metka_hash) {
+                    throw new Error('Введите current_metka_hash');
+                }
+
+                const response = await window.starknet.account.execute({
+                    contractAddress: contractAddress,
+                    entrypoint: 'set_nft_owner',
+                    calldata: [current_metka_hash]
+                });
+
+                await window.starknet.provider.waitForTransaction(response.transaction_hash);
+                console.log('Владелец NFT установлен, хэш транзакции:', response.transaction_hash);
+                ownerWalletAddress = myWalletAddress;
+                set_block("successful_claim", response.transaction_hash);
+            } catch (error) {
+                console.error('Ошибка установки владельца NFT:', error);
+                set_block("report_operation");
+            }
+        }
+
+        // Функция передачи владения контрактом (transfer_ownership)
+        async function transferOwnership() {
+            set_block("loading");
+            try {
+                if (!window.starknet || !window.starknet.account) {
+                    throw new Error('Сначала подключите кошелёк');
+                }
+
+                if (!current_metka_hash) {
+                    throw new Error('Введите current_metka_hash');
+                }
+
+                const newOwner = document.getElementById("input_address").value;
+                document.getElementById("input_address").value = "";
+                if (!newOwner || !newOwner.startsWith('0x')) {
+                    throw new Error('Некорректный адрес');
+                }
+
+                const response = await window.starknet.account.execute({
+                    contractAddress: contractAddress,
+                    entrypoint: 'transfer_ownership',
+                    calldata: [current_metka_hash, newOwner]
+                });
+
+                await window.starknet.provider.waitForTransaction(response.transaction_hash);
+                console.log('Владелец NFT установлен, хэш транзакции:', response.transaction_hash);
+                ownerWalletAddress = newOwner;
+                set_block("successful_transfer", response.transaction_hash);
+            } catch (error) {
+                console.error('Ошибка установки владельца NFT:', error);
+                set_block("report_operation");
+            }
+        }
+
+        connectButton.addEventListener('click', connectWallet);
+
+        connectWallet_global = connectWallet;
+        getNftOwner_global = getNftOwner;
+        setNftOwner_global = setNftOwner;
+        transferOwnership_global = transferOwnership;
+    });
+
+    function CopyOwner() {
+        navigator.clipboard.writeText(ownerWalletAddress).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }
+
+    function hexToHashAdvanced(hexString) {
+        const cleanHex = hexString.startsWith('0x') ? hexString.slice(2) : hexString;
+        let num = parseInt(cleanHex, 16);
+
+        // Более сложное перемешивание (взято из murmurhash-like подхода)
+        num = num >>> 0;
+        num = Math.imul(num, 0xcc9e2d51);
+        num = (num << 15) | (num >>> 17);
+        num = Math.imul(num, 0x1b873593);
+
+        return Math.abs(num % 1001);
+    }
+
+    // Загружаем фотку на сервер и получаем хэш
+    function make_request() {
+        let data = new FormData();
+        data.append('img', document.querySelector('#input_file').files[0]);
+
+        let request = new XMLHttpRequest();
+        request.responseType = 'json';
+        request.open('post', '/api/get_hash');
+
+        request.addEventListener('load', function (e) {
+            console.log(request.response);
+            document.getElementById('input_file').value = '';
+
+            console.log(request.response.status);
+            console.log(request.response.hash);
+            console.log(request.response.filename);
+
+            if (request.response.status) {
+                // Меняем блок на нужный
+                set_block("loading");
+
+                console.log("/mediafiles/" + request.response.filename + ".svg");
+                metka_img_big.src = "/mediafiles/" + request.response.filename + ".svg";
+                metka_img_small.src = "/mediafiles/" + request.response.filename + ".svg";
+
+                collectible_num.textContent = hexToHashAdvanced(request.response.hash);
+                current_metka_hash = "0x" + request.response.hash;
+
+                // Проверяем подключен кошелек или нет
+                if (myWalletAddress !== undefined) {
+                    // Если да, запрашиваем владельца текущей метки
+                    getNftOwner_global(current_metka_hash);
+                } else {
+                    set_block("connect_to_unlock");
+                }
+            } else {
+                set_block("report_operation");
+            }
+        });
+
+        request.send(data);
+    }
+</script>
+</body>
+</html>
